@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+__author__ = "Guieu Christophe, Tallot Adrien"
+__date__ = "21-03-2014"
+
 import os
 
 
