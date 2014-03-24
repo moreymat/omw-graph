@@ -32,11 +32,30 @@ def isComment(line):
         return False
 
 
+def isLemma(line):
+    splitline = line.split("\t")
+    if splitline[1] == "lemma":
+        return True
+    else:
+        return False
+
+
+def isAdmisible(line):
+    """Check if the line is admissible ie line is a lemma"""
+    if isComment(line) is True:
+        return False
+    elif not(isLemma(line)) is True:
+        return False
+    else:
+        return True
+
+
 def parseFile(simplefile, dico, lng):
 
     """Parse a file and add it into the dictionary"""
     for line in simplefile:
-        if isComment(line):
+        if not(isAdmisible(line)):
+            print(line)
             continue
         key, value = getKeyValue(line)
         value = (value, lng)
