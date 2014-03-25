@@ -34,6 +34,24 @@ def openFile(filename=''):
     return f
 
 
+def removeCR(word):
+    return word[0:-1]
+
+
+def protectChar(word):
+    if '"' in word:
+        lw = list(word)
+        lw[lw.index('"')] = '\\"'
+        word = ''.join(lw)
+    return word
+
+
+def parseWord(word):
+    word = removeCR(word)
+    word = protectChar(word)
+    return str(word)
+
+
 def splitLine(line):
     global deli
     return line.split(deli)
@@ -46,7 +64,8 @@ def parseLine(line):
         sl = splitLine(line)
         if not(sl[1] in dtl):
             return
-        return (sl[0], sl[2])
+        word = parseWord(str(sl[2]))
+        return (sl[0], str(word))
 
 
 def setVariable(delimitor='\t',
@@ -64,6 +83,7 @@ def setVariable(delimitor='\t',
 def parseFile(filename='', delimitor='\t',
               commentcharlist=['#'],
               datatypelist=['lemma']):
+
     data = []
     setVariable(delimitor, commentcharlist, datatypelist)
     f = openFile(filename)
