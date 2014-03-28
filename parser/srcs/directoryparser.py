@@ -40,6 +40,7 @@ def addDico(data):
     else create the entry and set it to the value
     """
     global dico
+
     for d in data:
         key = getKey(d)
         value = getValue(d)
@@ -69,11 +70,14 @@ def parseDirectory(directory):
     parseFiles(files)
 
 
-def main(directory):
+def main():
+
     global dico
+
+    directory = raw_input("Entrer the data directory : ")
 
     parseDirectory(directory)
 
 
 if __name__ == '__main__':
-    main('../data/')
+    main()
