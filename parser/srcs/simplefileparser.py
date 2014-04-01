@@ -60,12 +60,17 @@ def protectChar(word):
     return str(word)
 
 
+def removeSpace(word):
+    return word.replace(' ', '_')
+
+
 def parseWord(word):
     """ Remove the carriage return and protect the char
         return the word as a string
     """
     word = removeCR(word)
     word = protectChar(word)
+    word = removeSpace(word)
     return str(word)
 
 
@@ -117,13 +122,14 @@ def parseFile(filename='', delimitor='\t',
         kv = parseLine(line)
         if kv is not None:
             data.append(kv)
-
     return data
 
 
 def main():
-    filename = raw_input("Entrer the filename : ")
-    parseFile(filename)
+    filename = '../data/wn-data-eng.tab'
+    data = parseFile(filename)
+    print(data)
+
 
 if __name__ == '__main__':
     main()
