@@ -9,15 +9,18 @@ __author__ = 'Guieu Christophe, Tallot Adrien'
 __date__ = '29-03-2014'
 
 
-from simplefileparser import parseFile
+from directoryparser import parseDirectory
+from directoryparser import getDico
 from nltk.corpus import wordnet
 
 
 def createWordList(data):
     wordlist = []
 
-    for t in data:
-        wordlist.append(str(t[1]))
+    for key in data.keys():
+        values = data[key]
+        for value in values:
+            wordlist.append((key, str(value)))
 
     return wordlist
 
@@ -65,13 +68,17 @@ def relations(w1, w2, rtype):
     elif rtype == 'HYPER':
         hypernyms(w1, w2)
 
+def getWord(t):
+    return str(t[1])
 
 def main():
-    data = parseFile('../data/wn-data-eng.tab')
+    parseDirectory('../datatest/')
+    data = getDico()
 
     wordlist = createWordList(data)
 
-    for word in wordlist:
+    for t in wordlist:
+        word = getWord(t)
         syns = getSynsets(word)
         syno = getName(syns)
         for s in syno:
