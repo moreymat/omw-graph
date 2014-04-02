@@ -24,6 +24,15 @@ ID-TYPE   lemma   MOT
 Les 3 champs sont separes par une tabulation.
 
 ***
+Fichiers
+--------
+simplefileparser.py : lit et extrais les lemmes  d'un fichier .tab
+directoryparser.py : extrait les lemmes d'un ensemble de fichier .tab contenu
+                     dans un dossier
+extractrelations.py: extrais les relations de nltk pour l'anglais
+
+
+***
 
 Structure de donnees
 --------------------
