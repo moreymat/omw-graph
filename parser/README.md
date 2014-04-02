@@ -24,6 +24,13 @@ ID-TYPE   lemma   MOT
 Les 3 champs sont separes par une tabulation.
 
 ***
+Module as installer
+-------------------
+* nltk-3.0a3
+* PyYAML-3.11
+* py2neo
+
+***
 Fichiers
 --------
 simplefileparser.py : lit et extrais les lemmes  d'un fichier .tab
@@ -77,3 +84,12 @@ valeur l alignement sur l anglais - celui-ci se retrouve au milieu.
 
 Pour l instant cette representation n est pas connexe. Rien ne relie chat et
 chien entre eux.
+
+***
+Problemes rencontres
+--------------------
+
+* installation de nltk pour python3 solution version alpha de nltk
+  comptatible avec python3
+
+* py2neo pour python3 Solution pas trouver
