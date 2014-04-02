@@ -49,20 +49,17 @@ def getName(syns):
 
 def synonyms(w1, w2):
 # connec to neo4j
-    #print(str(w1) + " SYNO " + str(w2))
-    pass
+    print(str(w1) + " SYNO " + str(w2))
 
 
 def hyponyms(w1, w2):
 # connec to neo4j
-    #print(str(w1) + " HYPO " + str(w2))
-    pass
+    print(str(w1) + " HYPO " + str(w2))
 
 
 def hypernyms(w1, w2):
 # connec to neo4j
-    #print(str(w1) + " HYPER " + str(w2))
-    pass
+    print(str(w1) + " HYPER " + str(w2))
 
 
 def relations(w1, w2, rtype):
@@ -106,7 +103,7 @@ def extractRelation(directory):
 
 
 def main():
-    directory = raw_input("Enter a directory : ")
+    directory = input("Enter a directory : ")
     extractRelation(directory)
 
 if __name__ == '__main__':

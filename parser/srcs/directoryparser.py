@@ -7,9 +7,9 @@ Parse all file in a directory
 
 import os
 import sys
-from simpleFileParser import parseFile
-from simpleFileParser import getKey
-from simpleFileParser import getValue
+from simplefileparser import parseFile
+from simplefileparser import getKey
+from simplefileparser import getValue
 
 __author__ = 'Guieu Christophe, Tallot Adrien'
 __date__ = '26-03-2014'
@@ -74,7 +74,7 @@ def main():
 
     global dico
 
-    directory = raw_input("Entrer the data directory : ")
+    directory = input("Entrer the data directory : ")
 
     parseDirectory(directory)
 
