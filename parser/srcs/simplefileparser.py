@@ -40,10 +40,14 @@ def verifyFile(filename):
 
 def openFile(filename=''):
     """ Open a file wich the name is given"""
-    verifyFile(filename)
-    f = open(filename, 'r')
+    try:
+        f = open(filename, 'r')
+    except IOError as ioe:
+        print("Error in " + __file__ + " : " + "can not open " + filename)
+        sys.exit(-1)
+    else:
+        return f
 
-    return f
 
 
 def removeCR(word):
@@ -128,7 +132,6 @@ def parseFile(filename='', delimitor='\t',
 def main():
     filename = '../data/wn-data-eng.tab'
     data = parseFile(filename)
-    print(data)
 
 
 if __name__ == '__main__':
