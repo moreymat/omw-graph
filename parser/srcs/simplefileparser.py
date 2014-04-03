@@ -10,12 +10,13 @@ import sys
 
 __author__ = 'Guieu Christophe, Tallot Adrien'
 __date__ = '25-03-2014'
-__version__ = '0.1'
 
 
 dtl = []
 ccl = []
 deli = ''
+fout = None #output file
+headerdone = False
 
 
 def getKey(t):
@@ -102,30 +103,51 @@ def parseLine(line):
 
 def setVariable(delimitor='\t',
                 commentcharlist=['#'],
-                datatypelist=['lemma']):
+                datatypelist=['lemma'],
+                output='word.csv/'):
     """ Set global virables """
     global dtl
     global ccl
     global deli
+    global fout
 
     dtl = datatypelist
     ccl = commentcharlist
     deli = delimitor
+    fout = open(output, 'a')
 
 
-def parseFile(filename='', delimitor='\t',
+def header():
+    global fout
+    fout.write('key\tword\n')
+
+def toCSV(data):
+    global fout
+    global headerdone
+
+    if not(headerdone):
+        header()
+        headerdone = True
+
+    for d in data:
+        fout.write(str(d[0]) + "\t" + str(d[1]) +"\n")
+
+    fout.close()
+
+def parseFile(filename='', output='word.csv', delimitor='\t',
               commentcharlist=['#'],
               datatypelist=['lemma', 'fre:lemma']):
 
     """ parse a file and return the data extract in a list of tuples """
 
     data = []
-    setVariable(delimitor, commentcharlist, datatypelist)
+    setVariable(delimitor, commentcharlist, datatypelist, output)
     f = openFile(filename)
     for line in f:
         kv = parseLine(line)
         if kv is not None:
             data.append(kv)
+    toCSV(data)
     return data
 
 
