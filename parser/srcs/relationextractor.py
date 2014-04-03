@@ -14,6 +14,8 @@ from directoryparser import getDico
 from simplefileparser import getValue
 from nltk.corpus import wordnet
 
+out = None
+
 
 def createWordList(data):
     wordlist = []
@@ -49,17 +51,20 @@ def getName(syns):
 
 def synonyms(w1, w2):
 # connec to neo4j
-    print(str(w1) + " SYNO " + str(w2))
+    global out
+    out.write(str(w1) + "\tSYNO\t"+ str(w2) + '\n')
 
 
 def hyponyms(w1, w2):
 # connec to neo4j
-    print(str(w1) + " HYPO " + str(w2))
+    global out
+    out.write(str(w1) + "\tHYPO\t" + str(w2) + '\n')
 
 
 def hypernyms(w1, w2):
 # connec to neo4j
-    print(str(w1) + " HYPER " + str(w2))
+    global out
+    out.write(str(w1) + "\tHYPER\t" + str(w2) + '\n')
 
 
 def relations(w1, w2, rtype):
@@ -73,12 +78,18 @@ def relations(w1, w2, rtype):
 def getWord(t):
     return getValue(t)
 
+
 def extractRelation(directory):
     """Extract the relation for English Omw
     """
+    global out
+
     parseDirectory(directory)
     data = getDico()
     wordlist = createWordList(data)
+
+    out = open('rels.csv', 'a')
+    out.write('w1\ttype\tw2\n')
 
     for t in wordlist:
         word = getWord(t)
@@ -103,7 +114,7 @@ def extractRelation(directory):
 
 
 def main():
-    directory = input("Enter a directory : ")
+    directory = '../datatest/'
     extractRelation(directory)
 
 if __name__ == '__main__':
