@@ -41,30 +41,53 @@ def getHypernyms(syn):
     return syn.hypernyms()
 
 
+def getId(syn):
+    i = ""
+    padding = ""
+    offset = str(syn.offset())
+
+    for i in range(8 - len(offset)):
+        padding = padding + "0"
+
+    offset = padding + offset
+    offset = offset + "-" + syn.pos()
+
+    return offset
+
 def getName(syns):
     syno = []
     for s in syns:
         for l in s.lemma_names():
-            syno.append(l)
+            name = s.name().split('.')[0]
+            syno.append((getId(s), l))
     return syno
 
 
 def synonyms(w1, w2):
-# connec to neo4j
-    global out
-    out.write(str(w1) + "\tSYNO\t"+ str(w2) + '\n')
+    # connect to neo4j
+    #global out
+    out.write(str(w1[0]) + "\t" + str(w1[1]) + "\tSYNO\t" + str(w2[0]) + "\t" + str(w2[1]) + "\n")
+    #print(str(w1[0]) + "\t" + str(w1[1]) + "\tSYNO\t" + str(w2[0]) + "\t" + str(w2[1]) + "\n")
+    #print(str(w1) + "\tHYPO\t" + str(w2) + "\n")
+    #pass
 
 
 def hyponyms(w1, w2):
-# connec to neo4j
-    global out
-    out.write(str(w1) + "\tHYPO\t" + str(w2) + '\n')
+    # connect to neo4j
+    #global out
+    out.write(str(w1[0]) + "\t" + str(w1[1]) + "\tHYPO\t" + str(w2[0]) + "\t" + str(w2[1]) + "\n")
+    #print(str(w1[0]) + "\t" + str(w1[1]) + "\tHYPO\t" + str(w2[0]) + "\t" + str(w2[1]) + "\n")
+    #print(str(w1) + "\tHYPO\t" + str(w2) + "\n")
+    #pass
 
 
 def hypernyms(w1, w2):
-# connec to neo4j
-    global out
-    out.write(str(w1) + "\tHYPER\t" + str(w2) + '\n')
+    # connect to neo4j
+    #global out
+    out.write(str(w1[0]) + "\t" + str(w1[1]) + "\tHYPER\t" + str(w2[0]) + "\t" + str(w2[1]) + "\n")
+    #print(str(w1[0]) + "\t" + str(w1[1]) + "\tHYPER\t" + str(w2[0]) + "\t" + str(w2[1]) + "\n")
+    #print(str(w1) + "\tHYPO\t" + str(w2) + "\n")
+    #pass
 
 
 def relations(w1, w2, rtype):
@@ -96,25 +119,25 @@ def extractRelation(directory):
         syns = getSynsets(word)
         syno = getName(syns)
         for s in syno:
-            relations(word, s, 'SYNO')
+            relations(t, s, 'SYNO')
 
         for syn in syns:
             hypos = getHyponyms(syn)
             hypolemma = getName(hypos)
             for h in hypolemma:
-                relations(word, h, 'HYPO')
+                relations(t, h, 'HYPO')
 
 
         for syn in syns:
             hyper = getHypernyms(syn)
             hyperlemma = getName(hyper)
             for h in hyperlemma:
-                relations(word, h, 'HYPER')
+                relations(t, h, 'HYPER')
 
 
 
 def main():
-    directory = '../datatest/'
+    directory = '../data/'
     extractRelation(directory)
 
 if __name__ == '__main__':
