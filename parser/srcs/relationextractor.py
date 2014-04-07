@@ -82,7 +82,7 @@ def extractRelation(directory):
     wordlist = createWordList(data)
 
     out = open('rels.csv', 'a')
-    out.write('w1\ttype\tw2\n')
+    out.write('s1\ttype\ts2\n')
 
     for t in wordlist:
         word = getWord(t)
