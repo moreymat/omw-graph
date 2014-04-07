@@ -77,7 +77,7 @@ def extractRelation(directory):
     """
     global out
 
-    parseDirectory(directory)
+    parseDirectory(directory, write=False)
     data = getDico()
     wordlist = createWordList(data)
 
@@ -107,7 +107,7 @@ def extractRelation(directory):
 
 
 def main():
-    directory = '../data/'
+    directory = '../../data/'
     extractRelation(directory)
 
 if __name__ == '__main__':

@@ -12,9 +12,9 @@ __author__ = 'Guieu Christophe, Tallot Adrien'
 __date__ = '25-03-2014'
 
 
-dtl = []
-ccl = []
-deli = ''
+dtl = [] #Data type we want
+ccl = [] #Comment char for tab file
+deli = '' # delimitor for tabfile
 fout = None #output file
 headerdone = False
 
@@ -76,24 +76,23 @@ def parseWord(word):
     word = removeCR(word)
     word = protectChar(word)
     word = removeSpace(word)
+
     return str(word)
 
 
-def splitLine(line):
-    """ Split the line with the given delimitor """
-    global deli
-    return line.split(deli)
 
 
 def parseLine(line):
     """ Check if the line is commented
-    if not extract the key and the value from the line and
-    return it as a tuple (key, value)
+        if not extract the key and the value from the line and
+        return it as a tuple (key, value)
     """
+    global deli
+
     if line[0] in ccl:
         return
     else:
-        sl = splitLine(line)
+        sl = line.split(deli)
         if not(sl[1] in dtl):
             return
         word = parseWord(str(sl[2]))
@@ -103,51 +102,47 @@ def parseLine(line):
 
 def setVariable(delimitor='\t',
                 commentcharlist=['#'],
-                datatypelist=['lemma'],
-                output='word.csv/'):
+                datatypelist=['lemma']):
     """ Set global virables """
     global dtl
     global ccl
     global deli
-    global fout
 
     dtl = datatypelist
     ccl = commentcharlist
     deli = delimitor
-    fout = open(output, 'a')
 
 
-def header():
-    global fout
-    fout.write('key\tword\n')
-
-def toCSV(data):
+def toCSV(data, output='word.csv', csvdel='\t'):
     global fout
     global headerdone
+    fout = open(output, 'a')
 
     if not(headerdone):
-        header()
+        fout.write('key' + csvdel + 'word\n')
         headerdone = True
 
     for d in data:
-        fout.write(str(d[0]) + "\t" + str(d[1]) +"\n")
+        fout.write(str(d[0]) + csvdel + str(d[1]) +"\n")
 
     fout.close()
 
 def parseFile(filename='', output='word.csv', delimitor='\t',
               commentcharlist=['#'],
-              datatypelist=['lemma', 'fre:lemma']):
+              datatypelist=['lemma', 'fre:lemma'], write=True):
+    print("WRITE : " + str(write))
 
     """ parse a file and return the data extract in a list of tuples """
 
     data = []
-    setVariable(delimitor, commentcharlist, datatypelist, output)
+    setVariable(delimitor, commentcharlist, datatypelist)
     f = openFile(filename)
     for line in f:
         kv = parseLine(line)
         if kv is not None:
             data.append(kv)
-    toCSV(data)
+    if write:
+        toCSV(data)
     return data
 
 
