@@ -63,40 +63,10 @@ def getName(syns):
     return syno
 
 
-def synonyms(w1, w2):
-    # connect to neo4j
-    #global out
-    out.write(str(w1[0]) + "\t" + str(w1[1]) + "\tSYNO\t" + str(w2[0]) + "\t" + str(w2[1]) + "\n")
-    #print(str(w1[0]) + "\t" + str(w1[1]) + "\tSYNO\t" + str(w2[0]) + "\t" + str(w2[1]) + "\n")
-    #print(str(w1) + "\tHYPO\t" + str(w2) + "\n")
-    #pass
-
-
-def hyponyms(w1, w2):
-    # connect to neo4j
-    #global out
-    out.write(str(w1[0]) + "\t" + str(w1[1]) + "\tHYPO\t" + str(w2[0]) + "\t" + str(w2[1]) + "\n")
-    #print(str(w1[0]) + "\t" + str(w1[1]) + "\tHYPO\t" + str(w2[0]) + "\t" + str(w2[1]) + "\n")
-    #print(str(w1) + "\tHYPO\t" + str(w2) + "\n")
-    #pass
-
-
-def hypernyms(w1, w2):
-    # connect to neo4j
-    #global out
-    out.write(str(w1[0]) + "\t" + str(w1[1]) + "\tHYPER\t" + str(w2[0]) + "\t" + str(w2[1]) + "\n")
-    #print(str(w1[0]) + "\t" + str(w1[1]) + "\tHYPER\t" + str(w2[0]) + "\t" + str(w2[1]) + "\n")
-    #print(str(w1) + "\tHYPO\t" + str(w2) + "\n")
-    #pass
-
 
 def relations(w1, w2, rtype):
-    if rtype == 'SYNO':
-        synonyms(w1, w2)
-    elif rtype == 'HYPO':
-        hyponyms(w1, w2)
-    elif rtype == 'HYPER':
-        hypernyms(w1, w2)
+    global out
+    out.write(str(w1[0]) + "\t" + rtype + "\t" + str(w2[0]) + "\n")
 
 def getWord(t):
     return getValue(t)
