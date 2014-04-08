@@ -119,11 +119,11 @@ def toCSV(data, output='word.csv', csvdel='\t'):
     fout = open(output, 'a')
 
     if not(headerdone):
-        fout.write('key' + csvdel + 'word\n')
+        fout.write('name:string:key' + csvdel + 'synset' + csvdel + 'word\n')
         headerdone = True
 
     for d in data:
-        fout.write(str(d[0]) + csvdel + str(d[1]) +"\n")
+        fout.write(str(d[0]) + str(d[1]) + csvdel +  str(d[0]) + csvdel + str(d[1]) +"\n")
 
     fout.close()
 

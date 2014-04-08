@@ -65,7 +65,7 @@ def getName(syns):
 
 def relations(w1, w2, rtype):
     global out
-    out.write(str(w1[0]) + "\t" + rtype + "\t" + str(w2[0]) + "\n")
+    out.write(str(w1[0]) + str(w1[1]) + "\t" + str(w2[0]) + str(w2[1]) + "\t" + rtype + "\n")
 
 def getWord(t):
     return getValue(t)
@@ -81,7 +81,7 @@ def extractRelation(directory):
     wordlist = createWordList(data)
 
     out = open('rels.csv', 'a')
-    out.write('s1\ttype\ts2\n')
+    out.write('name:string:key\tname:string:key\ttype\n')
 
     for t in wordlist:
         word = getWord(t)
