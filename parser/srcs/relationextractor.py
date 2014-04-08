@@ -9,6 +9,7 @@ __author__ = 'Guieu Christophe, Tallot Adrien'
 __date__ = '29-03-2014'
 
 
+import sys
 from directoryparser import parseDirectory
 from directoryparser import getDico
 from simplefileparser import getValue
@@ -106,7 +107,7 @@ def extractRelation(directory):
 
 
 def main():
-    directory = '../../data/'
+    directory = sys.argv[1]
     extractRelation(directory)
 
 if __name__ == '__main__':
