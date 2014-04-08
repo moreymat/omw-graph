@@ -20,11 +20,10 @@ out = None
 def createWordList(data):
     wordlist = []
 
-    if type(data) is dict:
-        for key in data.keys():
-            values = data[key]
-            for value in values:
-                wordlist.append((key, str(value)))
+    for key in data.keys():
+        values = data[key]
+        for value in values:
+            wordlist.append((key, str(value)))
 
     return wordlist
 

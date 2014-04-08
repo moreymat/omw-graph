@@ -130,7 +130,6 @@ def toCSV(data, output='word.csv', csvdel='\t'):
 def parseFile(filename='', output='word.csv', delimitor='\t',
               commentcharlist=['#'],
               datatypelist=['lemma', 'fre:lemma'], write=True):
-    print("WRITE : " + str(write))
 
     """ parse a file and return the data extract in a list of tuples """
 
