@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+from relationextractor import extractRelation
+
 rels = None
 wordout = None
 omw = None
@@ -10,7 +12,7 @@ deli = ''
 
 def setVariable(delimitor='\t',
                 commentcharlist=['#'],
-                datatypelist=['lemma']):
+                datatypelist=['lemma', 'fre:lemma']):
     """ Set global virables """
     global dtl
     global ccl
@@ -83,6 +85,7 @@ def parseFile(filename):
 
     setVariable()
 
+    header = True
 
     for line in omw:
         kv = parseLine(line)
@@ -90,6 +93,8 @@ def parseFile(filename):
             ki = generateIndexKey(str(kv[0]), str(kv[1]), lng)
             linecsv = ki + csvdel +  str(kv[0]) + csvdel + str(kv[1]) +"\n"
             appendLine(wordout, linecsv)
+            extractRelation(kv, lng, header)
+            header = False
 
     wordout.close()
 
