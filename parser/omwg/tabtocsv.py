@@ -70,8 +70,8 @@ def parseLine(line):
 def appendLine(f, line):
     f.write(line)
 
-def generateIndexKey(syn, word, lng):
-    return syn + word + lng
+def generateIndexKey(syn, word, lng, deliminator):
+    return syn + deliminator + word + deliminator + lng
 
 def parseFile(filename):
     omw = open(filename, 'r')
@@ -90,7 +90,7 @@ def parseFile(filename):
     for line in omw:
         kv = parseLine(line)
         if not(kv is None):
-            ki = generateIndexKey(str(kv[0]), str(kv[1]), lng)
+            ki = generateIndexKey(str(kv[0]), str(kv[1]), lng, '_')
             linecsv = ki + csvdel +  str(kv[0]) + csvdel + str(kv[1]) +"\n"
             appendLine(wordout, linecsv)
             extractRelation(kv, lng, header)

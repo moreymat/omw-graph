@@ -61,9 +61,10 @@ def getName(syns):
 
 
 
-def relations(w1, w2, rtype):
+def relations(w1, w2, rtype, lng):
     global out
-    out.write(str(w1[0]) + str(w1[1]) + "\t" + str(w2[0]) + str(w2[1]) + "\t" + rtype + "\n")
+    deliminator = '_'
+    out.write(str(w1[0]) + deliminator + str(w1[1]) + deliminator + lng + "\t" + str(w2[0]) + deliminator + str(w2[1]) + deliminator + lng + "\t" + rtype + "\n")
 
 
 def getWord(t):
@@ -75,22 +76,22 @@ def english(t):
     syns = getSynsets(word)
     syno = getName(syns)
     for s in syno:
-        relations(t, s, 'SYNO')
+        relations(t, s, 'SYNO', 'eng')
 
     for syn in syns:
         hypos = getHyponyms(syn)
         hypolemma = getName(hypos)
         for h in hypolemma:
-            relations(t, h, 'HYPO')
+            relations(t, h, 'HYPO', 'eng')
         hyper = getHypernyms(syn)
         hyperlemma = getName(hyper)
         for h in hyperlemma:
-            relations(t, h, 'HYPER')
+            relations(t, h, 'HYPER', 'eng')
 
 
 def extractRelation(t, lng, header=True):
     global out
-    filename = "rels-" + lng + ".csv"
+    filename = "csv_files/rels-" + lng + ".csv"
 
     out = open(filename, 'a')
     if header:
