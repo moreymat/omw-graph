@@ -77,16 +77,19 @@ def parseFile(filename):
     omw = open(filename, 'r')
     lng = filename.split('/')[-1].split('.')[0].split('-')[-1]
     outputfilename = 'csv_files/' + lng + '.csv'
-    wordout = open(outputfilename, 'a')
+    wordout = open(outputfilename, 'w')
 
     csvdel = '\t'
 
     wordout.write('name:string:key' + csvdel + 'synset' + csvdel + 'word\n')
 
+    wordout.close()
+
     setVariable()
 
     header = True
 
+    wordout = open(outputfilename, 'a')
     for line in omw:
         kv = parseLine(line)
         if not(kv is None):
