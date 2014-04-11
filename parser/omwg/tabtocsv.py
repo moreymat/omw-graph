@@ -76,7 +76,7 @@ def generateIndexKey(syn, word, lng):
 def parseFile(filename):
     omw = open(filename, 'r')
     lng = filename.split('/')[-1].split('.')[0].split('-')[-1]
-    outputfilename = lng + '.csv'
+    outputfilename = 'csv_files/' + lng + '.csv'
     wordout = open(outputfilename, 'a')
 
     csvdel = '\t'
