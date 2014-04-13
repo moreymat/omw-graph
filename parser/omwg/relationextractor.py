@@ -94,12 +94,12 @@ def extractRelation(t, lng, header=True):
     filename = "csv_files/rels-" + lng + ".csv"
 
     out = open(filename, 'w')
+
     if header:
         out.write('name:string:key\tname:string:key\ttype\n')
-    out.close()
-    out = open(filename, 'a')
     if lng == 'eng':
         english(t)
+
     out.close()
 
 

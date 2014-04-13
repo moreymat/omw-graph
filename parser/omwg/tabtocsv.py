@@ -83,13 +83,11 @@ def parseFile(filename):
 
     wordout.write('name:string:key' + csvdel + 'synset' + csvdel + 'word\n')
 
-    wordout.close()
 
     setVariable()
 
     header = True
 
-    wordout = open(outputfilename, 'a')
     for line in omw:
         kv = parseLine(line)
         if not(kv is None):
