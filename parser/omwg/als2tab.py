@@ -64,6 +64,7 @@ defid = 0
 exid = 0
 
 wn = collections.defaultdict(list)
+hyper = collections.defaultdict(list)
 rel = ['hypernym']
 rels = open('csv_files/rels-als.csv', 'w')
 writeHeaderRels(rels)
@@ -105,9 +106,20 @@ for l in f:
         reltype = str(m.group(1).strip())
         if reltype in rel:
            key = m.group(2).strip()[6:]
-           writeLineRels(synset, lemma, key, wn[key], 'HYPER', 'als', rels)
-           writeLineRels(key, wn[key], lemma, synset, 'HYPO', 'als', rels)
+           hyper[key].append(synset)
            #print(lemma + " : " + reltype + " : " + str(wn[key]))
+
+
+
+for key in hyper.keys():
+    for g in wn[key]:
+        for g2 in hyper[key]:
+            for w in wn[g2]:
+                g = str(g).replace(" ", "_")
+                w = str(w).replace(" ", "_")
+                writeLineRels(key, g, g2, w, 'HYPER', 'als', rels)
+                writeLineRels(g2, w, key, g, 'HYPO', 'als', rels)
+
 
 for key in wn.keys():
     for w1 in wn[key]:
