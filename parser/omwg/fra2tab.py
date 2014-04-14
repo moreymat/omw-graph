@@ -9,7 +9,7 @@ import sys, re
 import codecs, collections
 
 ### Change this!
-wndata = "../wordnet/"
+wndata = "../data/"
 
 wnname = "WOLF (Wordnet Libre du Français)"
 wnurl = "http://alpage.inria.fr/~sagot/wolf-en.html"
@@ -24,6 +24,7 @@ outfile = "wn-data-%s.tab" % wnlang
 o = codecs.open(outfile, "w", "utf-8" )
 
 o.write("# %s\t%s\t%s\t%s\n" % (wnname, wnlang, wnurl, wnlicense))
+wordcsv = open("csv_files/word-fra.csv", 'w')
 
 #
 # Data is in the file wolf-1.0b.xml
@@ -49,6 +50,7 @@ for l in f:
         #lemma = re.sub(r'[ _]\(.*\)', ' ', lemma).strip()
         #lemma = re.sub(r'\|fr.*$', '', lemma).strip()
         if lemma != '_EMPTY_':
+            writeLineWord(synset, lemma, 'fra', wordcsv)
             wn[synset].add(lemma)
     i = re.finditer(r"<ILR type=\"hypernym\">([^<]+)<", l)
     for m in i:
@@ -66,9 +68,9 @@ for key in hyper.keys():
     for g in wn[key]:
         for g2 in hyper[key]:
             for w in wn[g2]:
-                g = str(g)
-                w = str(w)
-                g = g.replace(" ", "_")
-                w = w.replace(" ", "_")
-                rels.write(str(key)+str(g)+'fra' + '\t' + str(g2)+str(w)+'fra' + '\t' + str(g) + '\t' + str(w) + '\tHYPER' + '\n')
-                rels.write(str(g2)+str(w)+'fra' + '\t' +str(key)+str(g)+'fra' + '\t' +  str(w) + '\t' + str(g) + '\tHYPO' + '\n')
+                g = str(g).replace(" ", "_")
+                w = str(w).replace(" ", "_")
+                writeLineRels(key, g, g2, w, 'HYPER', 'fra', rels)
+                writeLineRels(g2, w, key, g, 'HYPO', 'fra', rels)
+                #rels.write(str(key)+str(g)+'fra' + '\t' + str(g2)+str(w)+'fra' + '\t' + str(g) + '\t' + str(w) + '\tHYPER' + '\n')
+                #rels.write(str(g2)+str(w)+'fra' + '\t' +str(key)+str(g)+'fra' + '\t' +  str(w) + '\t' + str(g) + '\tHYPO' + '\n')
