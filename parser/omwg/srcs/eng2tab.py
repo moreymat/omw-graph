@@ -26,6 +26,8 @@ def createSynset(offset, pos):
         synset = synset[:-1] + 'a'
     return synset
 
+
+
 #
 # header
 #
@@ -42,6 +44,8 @@ writeHeaderWord(outfile_word)
 
 for s in w.all_synsets():
     synset = createSynset(s.offset(), s.pos())
+    lemmas = s.lemmas()
+
     for l in s.lemmas():
         writeLineWord(synset, l.name(), wnlang, outfile_word)
         for k in s.lemmas():
@@ -49,7 +53,6 @@ for s in w.all_synsets():
                 writeLineRels(synset, l.name().replace('_',' '), synset, k.name().replace('_',' '), 'SYNO', wnlang, outfile_rels)
 
     hyper = s.hypernyms()
-    lemmas = s.lemmas()
     for h in hyper:
         synsethyper = createSynset(h.offset(), h.pos())
         for lh in h.lemmas():
@@ -57,33 +60,10 @@ for s in w.all_synsets():
                 writeLineRels(synsethyper, lh.name().replace('_',' '), synset, l.name().replace('_',' '), 'HYPER', wnlang, outfile_rels)
 
     hypo = s.hyponyms()
-    lemmas = s.lemmas()
     for h in hypo:
         synsethypo = createSynset(h.offset(), h.pos())
         for lh in h.lemmas():
             for l in lemmas:
                 writeLineRels(synsethypo, lh.name().replace('_',' '), synset, l.name().replace('_',' '), 'HYPO', wnlang, outfile_rels)
 
-##HYPERNYMS
-#for s in w.all_synsets():
-#    hyper = s.hypernyms()
-#    lemmas = s.lemmas()
-#    synset = createSynset(s.offset(), s.pos())
-#    for h in hyper:
-#        synsethyper = createSynset(h.offset(), h.pos())
-#        for lh in h.lemmas():
-#            for l in lemmas:
-#                writeLineRels(synsethyper, lh.name().replace('_',' '), synset, l.name().replace('_',' '), 'HYPER', wnlang, outfile_rels)
-#
-##HYPONYMS
-#for s in w.all_synsets():
-#    hypo = s.hyponyms()
-#    lemmas = s.lemmas()
-#    synset = createSynset(s.offset(), s.pos())
-#    for h in hypo:
-#        synsethypo = createSynset(h.offset(), h.pos())
-#        for lh in h.lemmas():
-#            for l in lemmas:
-#                writeLineRels(synsethypo, lh.name().replace('_',' '), synset, l.name().replace('_',' '), 'HYPO', wnlang, outfile_rels)
-#
 outfile_rels.close()
