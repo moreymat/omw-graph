@@ -5,18 +5,35 @@ function usage
     echo "Usage: $0 datadirectory"
 }
 
-if [ $# -lt 1 ]
-then
-    usage
-    exit -1
-fi
+function getRelsFiles
+{
+  for i in csv_files/rels-*.csv
+  do
+    if [ -z "$relsfiles" ];then
+      relsfiles=$i
+    else
+      relsfiles=$relsfiles,$i
+    fi
+  done
+  echo $relsfiles
+}
 
-python directoryparser.py "$1"
-shift
+function getWordsFiles
+{
+  for i in csv_files/word-*.csv
+  do
+    if [ -z "$wordfiles" ];then
+      wordfiles=$i
+    else
+      wordfiles=$wordfiles,$i
+    fi
+  done
+  echo $wordfiles
+}
 
 DB="db/omw-grap.db"
-NODES="csv_files/eng.csv"
-RELS="csv_files/rels-eng.csv"
+NODES=$(getWordsFiles)
+RELS=$(getRelsFiles)
 CP=""
 HEAP=4G
 for i in db/neo4j_batch_importer/lib/*.jar; do CP="$CP":"$i"; done

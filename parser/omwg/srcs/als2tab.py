@@ -23,7 +23,7 @@ wnlicense = "CC BY 3.0"
 #
 # header
 #
-outfile = "wn-data-%s.tab" % wnlang
+outfile = "tab_files/wn-data-%s.tab" % wnlang
 o = codecs.open(outfile, "w", "utf-8" )
 log = codecs.open("log", "w", "utf-8" )
 
@@ -129,3 +129,4 @@ for key in wn.keys():
             writeLineRels(key, w1, key, w2, 'SYNO', 'als', rels)
 
 rels.close()
+word.close()

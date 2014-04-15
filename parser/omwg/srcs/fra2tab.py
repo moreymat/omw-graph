@@ -21,7 +21,7 @@ wnversion = "1.0b"
 #
 # header
 #
-outfile = "wn-data-%s.tab" % wnlang
+outfile = "tab_files/wn-data-%s.tab" % wnlang
 o = codecs.open(outfile, "w", "utf-8" )
 
 o.write("# %s\t%s\t%s\t%s\n" % (wnname, wnlang, wnurl, wnlicense))
