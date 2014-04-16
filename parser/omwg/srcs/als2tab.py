@@ -67,10 +67,8 @@ wn = collections.defaultdict(list)
 hyper = collections.defaultdict(list)
 rel = ['hypernym']
 rels = open('csv_files/rels-als.csv', 'w')
-writeHeaderRels(rels)
 
 word = open('csv_files/word-als.csv', 'w')
-writeHeaderWord(word)
 
 for l in f:
     ##print l, "EOS"
@@ -115,8 +113,6 @@ for key in hyper.keys():
     for g in wn[key]:
         for g2 in hyper[key]:
             for w in wn[g2]:
-                g = str(g).replace(" ", "_")
-                w = str(w).replace(" ", "_")
                 writeLineRels(key, g, g2, w, 'HYPER', 'als', rels)
                 writeLineRels(g2, w, key, g, 'HYPO', 'als', rels)
 
