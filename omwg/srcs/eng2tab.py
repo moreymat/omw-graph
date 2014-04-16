@@ -32,8 +32,8 @@ def createSynset(offset, pos):
 # header
 #
 
-outfile_rels = open('csv_files/rels-eng.csv', 'w')
-outfile_word = open('csv_files/word-eng.csv', 'w')
+outfile_rels = open('data/csv_files/rels-eng.csv', 'w')
+outfile_word = open('data/csv_files/word-eng.csv', 'w')
 
 #
 # main

@@ -14,7 +14,7 @@ from toolsomw import writeLineWord
 from toolsomw import writeLineRels
 
 
-wndata="../data/"
+wndata="data/"
 wnname = "Albanet"
 wnlang = "als"
 wnurl = "http://fjalnet.com/"
@@ -23,7 +23,7 @@ wnlicense = "CC BY 3.0"
 #
 # header
 #
-outfile = "tab_files/wn-data-%s.tab" % wnlang
+outfile = "data/tab_files/wn-data-%s.tab" % wnlang
 o = codecs.open(outfile, "w", "utf-8" )
 log = codecs.open("log", "w", "utf-8" )
 
@@ -66,9 +66,9 @@ exid = 0
 wn = collections.defaultdict(list)
 hyper = collections.defaultdict(list)
 rel = ['hypernym']
-rels = open('csv_files/rels-als.csv', 'w')
+rels = open('data/csv_files/rels-als.csv', 'w')
 
-word = open('csv_files/word-als.csv', 'w')
+word = open('data/csv_files/word-als.csv', 'w')
 
 for l in f:
     ##print l, "EOS"

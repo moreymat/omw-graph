@@ -32,7 +32,7 @@ function buildCsvFiles
 
 function getRelsFiles
 {
-  for i in csv_files/rels-*.csv
+  for i in data/csv_files/rels-*.csv
   do
     if [ -z "$relsfiles" ];then
       relsfiles=$i
@@ -50,7 +50,7 @@ function getRelsFiles
 
 function getWordsFiles
 {
-  for i in csv_files/word-*.csv
+  for i in data/csv_files/word-*.csv
   do
     if [ -z "$wordfiles" ];then
       wordfiles=$i
@@ -70,13 +70,13 @@ function quickCleaner
 {
   echo "quick clean"
   
-  for file in csv_files/rels-*.csv
+  for file in data/csv_files/rels-*.csv
   do
     cat $file | sort | uniq | sponge $file
     sed -i 1i"name:string:key\tname:string:key\ttype" $file
   done
   
-  for file in csv_files/word-*.csv
+  for file in data/csv_files/word-*.csv
   do
     echo "$file"
     cat $file | sort | uniq | sponge $file

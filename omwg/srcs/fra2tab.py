@@ -10,7 +10,7 @@ import codecs, collections
 from toolsomw import *
 
 ### Change this!
-wndata = "../data/"
+wndata = "data/"
 
 wnname = "WOLF (Wordnet Libre du Français)"
 wnurl = "http://alpage.inria.fr/~sagot/wolf-en.html"
@@ -21,11 +21,11 @@ wnversion = "1.0b"
 #
 # header
 #
-outfile = "tab_files/wn-data-%s.tab" % wnlang
-o = codecs.open(outfile, "w", "utf-8" )
+outfile = "data/tab_files/wn-data-%s.tab" % wnlang
+o = codecs.open(outfile, "w", "utf-8")
 
 o.write("# %s\t%s\t%s\t%s\n" % (wnname, wnlang, wnurl, wnlicense))
-wordcsv = open("csv_files/word-fra.csv", 'w')
+wordcsv = open("data/csv_files/word-fra.csv", 'w')
 
 #
 # Data is in the file wolf-1.0b.xml
@@ -64,5 +64,5 @@ for synset in sorted(wn):
     for lemma in wn[synset]:
         o.write("%s\t%s:%s\t%s\n" % (synset, wnlang, 'lemma', lemma))
 
-rels = open('csv_files/rels-fra.csv', 'w')
+rels = open('data/csv_files/rels-fra.csv', 'w')
 hyperRels(wn, hyper, 'fra', rels)
