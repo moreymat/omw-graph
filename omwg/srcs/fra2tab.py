@@ -26,6 +26,7 @@ o = codecs.open(outfile, "w", "utf-8" )
 
 o.write("# %s\t%s\t%s\t%s\n" % (wnname, wnlang, wnurl, wnlicense))
 wordcsv = open("csv_files/word-fra.csv", 'w')
+writeHeaderWord(wordcsv)
 
 #
 # Data is in the file wolf-1.0b.xml
@@ -65,4 +66,16 @@ for synset in sorted(wn):
         o.write("%s\t%s:%s\t%s\n" % (synset, wnlang, 'lemma', lemma))
 
 rels = open('csv_files/rels-fra.csv', 'w')
+writeHeaderRels(rels)
 hyperRels(wn, hyper, 'fra', rels)
+
+#for key in hyper.keys():
+#    for g in wn[key]:
+#        for g2 in hyper[key]:
+#            for w in wn[g2]:
+#                g = str(g).replace(" ", "_")
+#                w = str(w).replace(" ", "_")
+#                writeLineRels(key, g, g2, w, 'HYPER', 'fra', rels)
+#                writeLineRels(g2, w, key, g, 'HYPO', 'fra', rels)
+                #rels.write(str(key)+str(g)+'fra' + '\t' + str(g2)+str(w)+'fra' + '\t' + str(g) + '\t' + str(w) + '\tHYPER' + '\n')
+                #rels.write(str(g2)+str(w)+'fra' + '\t' +str(key)+str(g)+'fra' + '\t' +  str(w) + '\t' + str(g) + '\tHYPO' + '\n')

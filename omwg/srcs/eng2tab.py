@@ -35,6 +35,9 @@ def createSynset(offset, pos):
 outfile_rels = open('csv_files/rels-eng.csv', 'w')
 outfile_word = open('csv_files/word-eng.csv', 'w')
 
+writeHeaderRels(outfile_rels)
+writeHeaderWord(outfile_word)
+
 #
 # main
 #
@@ -47,20 +50,20 @@ for s in w.all_synsets():
         writeLineWord(synset, l.name(), wnlang, outfile_word)
         for k in s.lemmas():
             if k != l:
-                writeLineRels(synset, l.name(), synset, k.name(), 'SYNO', wnlang, outfile_rels)
+                writeLineRels(synset, l.name().replace('_',' '), synset, k.name().replace('_',' '), 'SYNO', wnlang, outfile_rels)
 
     hyper = s.hypernyms()
     for h in hyper:
         synsethyper = createSynset(h.offset(), h.pos())
         for lh in h.lemmas():
             for l in lemmas:
-                writeLineRels(synsethyper, lh.name(), synset, l.name(), 'HYPER', wnlang, outfile_rels)
+                writeLineRels(synsethyper, lh.name().replace('_',' '), synset, l.name().replace('_',' '), 'HYPER', wnlang, outfile_rels)
 
     hypo = s.hyponyms()
     for h in hypo:
         synsethypo = createSynset(h.offset(), h.pos())
         for lh in h.lemmas():
             for l in lemmas:
-                writeLineRels(synsethypo, lh.name(), synset, l.name(), 'HYPO', wnlang, outfile_rels)
+                writeLineRels(synsethypo, lh.name().replace('_',' '), synset, l.name().replace('_',' '), 'HYPO', wnlang, outfile_rels)
 
 outfile_rels.close()
