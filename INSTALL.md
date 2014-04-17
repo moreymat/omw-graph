@@ -28,9 +28,12 @@ You have to configure the batch importer.
 Run
 ---
 
-1. Put .tab files in omw-graph/data (only english at this time)
-2. Launch run.sh script
-3. The database will be created in omw-graph/
+1. Put .xml files in omw-graph/data (english, french, albanese)
+2. Launch run.sh script this will generate : 
+  * data/tab-files/wn-data-xxx.tab
+  * data/csv-files/word-xxx.csv (nodes) 
+  * data/csv-files/and rels-xxx.csv (edges)
+3. The database will be created in omw-graph/db
 4. Copy/paste it in .../neo4j_folder/data
 5. Modify neo4j properties to make it use the new db
 6. Start/Restart neo4j
