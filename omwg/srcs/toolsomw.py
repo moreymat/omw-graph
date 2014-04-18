@@ -10,7 +10,8 @@ def cleanWord(word):
 
 
 def indexWord(word):
-    return word.replace("_", "_")
+    #return word.replace("_", "_")
+    return word
 
 
 def writeHeaderRels(target):
