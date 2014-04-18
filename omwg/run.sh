@@ -72,14 +72,15 @@ function quickCleaner
   
   for file in data/csv_files/rels-*.csv
   do
-    cat $file | sort | uniq | sponge $file
+    echo "$file"
+    { rm $file && sort -u > $file; } < $file
     sed -i 1i"name:string:key\tname:string:key\ttype" $file
   done
   
   for file in data/csv_files/word-*.csv
   do
     echo "$file"
-    cat $file | sort | uniq | sponge $file
+    { rm $file && sort -u > $file; } < $file
     sed -i 1i"name:string:key\tvalue" $file
   done
 }
