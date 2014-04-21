@@ -10,7 +10,8 @@ def cleanWord(word):
 
 
 def indexWord(word):
-    return word.replace("_", "")
+    #return word.replace("_", "_")
+    return word
 
 
 def writeHeaderRels(target):
@@ -27,7 +28,7 @@ def writeLineRels(syn1, word1, syn2, word2, rel, lng, target):
 
 
 def writeLineWord(syn, word, lng, target):
-    target.write("{syn}#{wordIndex}#{lng}\t{wordClean}\n".format(
+    target.write("{syn}#{wordIndex}#{lng}\t{wordClean}\t{syn}\t{lng}\n".format(
         syn=syn, wordIndex=indexWord(word), wordClean=cleanWord(word), lng=lng))
 
 

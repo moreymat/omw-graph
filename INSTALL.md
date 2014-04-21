@@ -21,9 +21,12 @@ If you already use the batch importer, make sure your `batch.properties` file co
 Run
 ---
 
-1. Put wordnet files in `omwg/data/` (only english at this time)
-2. Launch `run.sh` script
-3. The database will be created in the current directory
-4. Copy the database to `.../neo4j_folder/data`
+1. Put .xml files in omw-graph/data (english, french, albanese)
+2. Launch run.sh script this will generate : 
+  * data/tab-files/wn-data-xxx.tab
+  * data/csv-files/word-xxx.csv (nodes) 
+  * data/csv-files/and rels-xxx.csv (edges)
+3. The database will be created in omw-graph/db
+4. Copy/paste it in .../neo4j_folder/data
 5. Modify neo4j properties to make it use the new db
 6. Start/Restart neo4j
