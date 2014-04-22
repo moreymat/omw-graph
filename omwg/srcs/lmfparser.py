@@ -12,10 +12,12 @@ from toolsomw import writeHeaderWord
 from toolsomw import writeHeaderRels
 
 
-lmffile = open('fra/wn-fra-lmf.xml', 'r')
-wordcsv = open('fra/word-fra.csv', 'w')
-relcsv = open('fra/rel-fra.csv', 'w')
+lmffile = None
+wordcsv = None
+relcsv  = None
 debugmode = False
+
+outputdir = '../data/csv_files/'
 
 word = collections.defaultdict(list) # key : synset value: word
 currentword = ''
@@ -76,9 +78,23 @@ def lexicalEntryTag(line):
 def lexiconTag(line):
     global lmffile
     global lng
+    global wordcsv
+    global relcsv
+    global outputdir
+
     if debugmode:
         print("In lexicon")
     lng = line.split('\'')[5]
+
+    filename = outputdir + 'word-'+ lng + '.csv'
+    wordcsv = open(filename, 'w')
+
+    filename = outputdir + 'rel-'+ lng + '.csv'
+    relcsv = open(filename, 'w')
+
+    writeHeaderWord(wordcsv)
+    writeHeaderRels(relcsv)
+
     return lmffile.readline()
 
 def synsetRelation(line):
@@ -180,13 +196,10 @@ def main():
     global debugmode
     global wordcsv
     global relcsv
+    global lmffile
 
-    if len(sys.argv) > 1 and sys.argv[1] == 'debug':
-        debugmode = True
-
-    writeHeaderWord(wordcsv)
-    writeHeaderRels(relcsv)
-
+    filenameoutput = sys.argv[1]
+    lmffile = open(filenameoutput, 'r')
     line = lmffile.readline()
     while line:
         if '<LexicalResource>' in line:
