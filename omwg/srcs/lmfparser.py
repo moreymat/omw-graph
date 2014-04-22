@@ -24,13 +24,6 @@ target = ''
 reltype = ''
 lng = ''
 
-#def writeLineWord(k1, w1):
-#    global wordcsv
-#    wordcsv.write(k1 + " : " + w1 + '\n')
-#
-#def writeLineRel(cid, w1, target, w2, rtype):
-#    global relcsv
-#    relcsv.write(cid + " " + w1 + " : " + target + " " + w2 + " : " + rtype + '\n')
 
 def globalInformationTag(line):
     global lmffile
@@ -100,6 +93,9 @@ def synsetRelation(line):
     if debugmode:
         print("In Synset Relation")
     target = line.split('\'')[1]
+    pos = target.split('-')[3]
+    nu = target.split('-')[2]
+    target = nu + '-' + pos
     reltype = line.split('\'')[3]
     for w in word[currentid]:
         for w2 in word[target]:
@@ -136,6 +132,9 @@ def synsetTag(line):
     if debugmode:
         print("In Synset")
     currentid = line.split('\'')[1]
+    pos = currentid.split('-')[3]
+    nu = currentid.split('-')[2]
+    currentid = nu + '-' + pos
     line = lmffile.readline()
 
     if '<Definition' in line:
