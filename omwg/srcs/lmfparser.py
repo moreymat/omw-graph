@@ -17,7 +17,7 @@ wordcsv = None
 relcsv  = None
 debugmode = False
 
-outputdir = '../data/csv_files/'
+outputdir = 'data/csv_files/'
 
 word = collections.defaultdict(list) # key : synset value: word
 currentword = ''

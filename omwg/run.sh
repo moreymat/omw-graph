@@ -14,10 +14,10 @@ function usage
 
 function buildCsvFiles
 {
-  for i in srcs/*2tab.py
+  for i in data/wn-*-lmf.xml
   do
       echo -n "Running $i..."
-      if ! python3 $i ; then
+      if ! python3 srcs/lmfparser.py $i ; then
         echo "Error $i"
       else
         echo "[OK]"
@@ -32,7 +32,7 @@ function buildCsvFiles
 
 function getRelsFiles
 {
-  for i in data/csv_files/rels-*.csv
+  for i in data/csv_files/rel-*.csv
   do
     if [ -z "$relsfiles" ];then
       relsfiles=$i
@@ -89,7 +89,7 @@ function quickCleaner
 
 # Generate csv files in csv_files folder
 buildCsvFiles
-quickCleaner
+#quickCleaner
 
 # target directory
 DB="db/omw-graph.db"
