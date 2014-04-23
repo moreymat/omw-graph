@@ -15,21 +15,41 @@ def indexWord(word):
 
 
 def writeHeaderRels(target):
-    target.write("name:string:key\tname:string:key\ttype\n")
+    target.write("name:string:synkey\tname:string:synkey\ttype\n")
 
 
 def writeHeaderWord(target):
-    target.write("name:string:key\tsynset\tword\n")
+    target.write("name:string:lexkey\tlemma\tpartofspeech\n")
 
 
-def writeLineRels(syn1, word1, syn2, word2, rel, lng, target):
-    target.write("{syn1}#{word1}#{lng}\t{syn2}#{word2}#{lng}\t{rel}\n".format(
-        syn1=syn1, word1=indexWord(word1), syn2=syn2, word2=indexWord(word2), rel=rel, lng=lng))
+def writeHeaderSynset(target):
+    target.write("name:string:synkey\n")
 
 
-def writeLineWord(syn, word, lng, target):
-    target.write("{syn}#{wordIndex}#{lng}\t{wordClean}\t{syn}\t{lng}\n".format(
-        syn=syn, wordIndex=indexWord(word), wordClean=cleanWord(word), lng=lng))
+def writeHeaderRelSynLex(target):
+    target.write("name:string:synkey\tname:string:lexkey\ttype\n")
+
+
+def writeLineRels(syn1, syn2, rel, target):
+    target.write("{syn1}\t{syn2}\t{rel}\n".format(
+        syn1=syn1, syn2=syn2, rel=rel))
+
+
+def writeLineWord(lng, version, lex, lemma, pos, target):
+    target.write("{key}\t{lemma}\t{pos}\n".format(
+        key=lng + '-' + version + '-' + lex,
+        lemma=lemma,
+        pos=pos))
+
+
+def writeLineSynset(syn, target):
+    target.write("{syn}\n".format(syn=syn))
+
+
+def writeLineRelSynLex(lex, lng, version, syn, target):
+    target.write("{syn}\t{lex}\tlexical\n".format(
+        syn=syn,
+        lex=lng + '-' + version + '-' + lex))
 
 
 def hyperRels(wn, hyper, lng, f):

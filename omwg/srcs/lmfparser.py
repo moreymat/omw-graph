@@ -5,27 +5,33 @@
 """
 
 import collections
-import sys, re
+import sys
 from toolsomw import writeLineWord
 from toolsomw import writeLineRels
+from toolsomw import writeLineSynset
+from toolsomw import writeLineRelSynLex
 from toolsomw import writeHeaderWord
 from toolsomw import writeHeaderRels
-
+from toolsomw import writeHeaderSynset
+from toolsomw import writeHeaderRelSynLex
 
 lmffile = None
 wordcsv = None
-relcsv  = None
+relcsv = None
+syncsv = None
+relsynlexcsv = None
 debugmode = False
 
 outputdir = 'data/csv_files/'
 
-word = collections.defaultdict(list) # key : synset value: word
+synsets = collections.defaultdict(list)
 currentword = ''
 currentid = ''
+currentpos = ''
 target = ''
 reltype = ''
 lng = ''
-
+version = ''
 
 def globalInformationTag(line):
     global lmffile
@@ -38,36 +44,50 @@ def globalInformationTag(line):
 def lemmaTag(line):
     global lmffile
     global currentword
+    global currentpos
+
     if debugmode:
         print("In Lemma Tag")
     currentword = line.split('\'')[1]
-
+    currentpos = line.split('\'')[3]
     return lmffile.readline()
 
 def senseTag(line):
     global lmffile
     global currentword
-    global word
+    global currentid
+    global synsets
     global lng
     global wordcsv
 
     if debugmode:
         print("In Sense")
     synset = line.split('\'')[3]
-    pos = synset.split('-')[3]
-    nu = synset.split('-')[2]
-    synset = nu + '-' + pos
-    writeLineWord(synset, currentword, lng, wordcsv)
-    word[synset].append(currentword)
+
+    if not synset in synsets:
+        writeLineSynset(synset, syncsv)
+        synsets[synset].append(synset)
+    writeLineRelSynLex(currentid, lng, version, synset, relsynlexcsv)
     return lmffile.readline()
 
 def lexicalEntryTag(line):
+
+    global currentpos
+    global currentword
+    global currentid
+    global syncsv
+    global lng
+    global version
+
     if debugmode:
         print("In Lexical Entry")
     if '<Lemma' in line:
         if debugmode:
             print("Go to lemma")
         line = lemmaTag(line)
+
+    writeLineWord(lng, version, currentid, currentword, currentpos, wordcsv)
+
     while '<Sense' in line:
         if debugmode:
             print("Go to Sense")
@@ -78,22 +98,34 @@ def lexicalEntryTag(line):
 def lexiconTag(line):
     global lmffile
     global lng
+    global version
     global wordcsv
     global relcsv
+    global syncsv
     global outputdir
+    global relsynlexcsv
 
     if debugmode:
         print("In lexicon")
     lng = line.split('\'')[5]
+    version = line.split('\'')[9]
 
-    filename = outputdir + 'word-'+ lng + '.csv'
+    filename = outputdir + 'word-' + lng + '.csv'
     wordcsv = open(filename, 'w')
 
-    filename = outputdir + 'rel-'+ lng + '.csv'
+    filename = outputdir + 'rel-' + lng + '.csv'
     relcsv = open(filename, 'w')
+
+    filename = outputdir + 'syn-' + lng + '.csv'
+    syncsv = open(filename, 'w')
+
+    filename = outputdir + 'relsynlex-' + lng + '.csv'
+    relsynlexcsv = open(filename, 'w')
 
     writeHeaderWord(wordcsv)
     writeHeaderRels(relcsv)
+    writeHeaderSynset(syncsv)
+    writeHeaderRelSynLex(relsynlexcsv)
 
     return lmffile.readline()
 
@@ -102,31 +134,29 @@ def synsetRelation(line):
     global currentid
     global target
     global reltype
-    global word
     global relcsv
     global lng
 
     if debugmode:
         print("In Synset Relation")
     target = line.split('\'')[1]
-    pos = target.split('-')[3]
-    nu = target.split('-')[2]
-    target = nu + '-' + pos
     reltype = line.split('\'')[3]
-    for w in word[currentid]:
-        for w2 in word[target]:
-            writeLineRels(currentid, w, target, w2, reltype, lng, relcsv)
 
     return lmffile.readline()
 
 def synsetRelationsTag(line):
     global lmffile
+    global relcsv
+
     if debugmode:
         print("In Synset Relations")
     line = lmffile.readline()
     while '<SynsetRelation' in line:
         if debugmode:
             print("Go to synset relation")
+        targetid = line.split('\'')[1]
+        reltype = line.split('\'')[3]
+        writeLineRels(currentid, targetid, reltype, relcsv)
         line = synsetRelation(line)
     return lmffile.readline()
 
@@ -148,9 +178,6 @@ def synsetTag(line):
     if debugmode:
         print("In Synset")
     currentid = line.split('\'')[1]
-    pos = currentid.split('-')[3]
-    nu = currentid.split('-')[2]
-    currentid = nu + '-' + pos
     line = lmffile.readline()
 
     if '<Definition' in line:
@@ -167,6 +194,8 @@ def synsetTag(line):
 
 def lexicalRessourceTag(line):
     global lmffile
+    global currentid
+
     if debugmode:
         print("In lexical Ressource")
     if '<GlobalInformation' in line:
@@ -181,6 +210,7 @@ def lexicalRessourceTag(line):
     while '<LexicalEntry' in line:
         if debugmode:
             print("Go to lexical Entry")
+        currentid = line.split('\'')[1]
         line = lexicalEntryTag(lmffile.readline())
         if '</LexicalEntry>' in line:
             line = lmffile.readline()
