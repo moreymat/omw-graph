@@ -136,6 +136,7 @@ def synsetRelation(line):
     global reltype
     global relcsv
     global lng
+    global synsets
 
     if debugmode:
         print("In Synset Relation")
@@ -156,7 +157,18 @@ def synsetRelationsTag(line):
             print("Go to synset relation")
         targetid = line.split('\'')[1]
         reltype = line.split('\'')[3]
+
         writeLineRels(currentid, targetid, reltype, relcsv)
+
+        # Uncomment to generate a clean process without orphan synset
+        # It also prints on stdout orphans synsets
+        #if currentid in synsets:
+        #    if targetid in synsets:
+        #        writeLineRels(currentid, targetid, reltype, relcsv)
+        #    else:
+        #        print(targetid)
+        #else:
+        #    print(currentid)
         line = synsetRelation(line)
     return lmffile.readline()
 
