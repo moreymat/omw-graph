@@ -25,7 +25,7 @@ batch_import.node_index.lexkey=exact
 Run
 ---
 
-1. Put your LMF XML files (`*-lmf.xml`) in `omw-graph/data/`
+1. Put your LMF XML files (`*-lmf.xml`) in `omwg/data/`
 2. Execute `run.sh`, this will generate:
   * `data/csv-files/word-xxx.csv` (nodes)
   * `data/csv-files/rels-xxx.csv` (edges)
