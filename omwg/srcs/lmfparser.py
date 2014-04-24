@@ -20,7 +20,6 @@ wordcsv = None
 relcsv = None
 syncsv = None
 relsynlexcsv = None
-nonlexsyncsv = None
 debugmode = False
 
 outputdir = 'data/csv_files/'
@@ -123,9 +122,6 @@ def lexiconTag(line):
 
     filename = outputdir + 'relsynlex-' + lng + '.csv'
     relsynlexcsv = open(filename, 'w')
-
-    filename = outputdir + 'nonlexsyn-' + lng + '.csv'
-    nonlexsyncsv = open(filename, 'w')
 
     writeHeaderWord(wordcsv)
     writeHeaderRels(relcsv)
