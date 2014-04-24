@@ -20,6 +20,7 @@ wordcsv = None
 relcsv = None
 syncsv = None
 relsynlexcsv = None
+nonlexsyncsv = None
 debugmode = False
 
 outputdir = 'data/csv_files/'
@@ -104,6 +105,7 @@ def lexiconTag(line):
     global syncsv
     global outputdir
     global relsynlexcsv
+    global nonlexsyncsv
 
     if debugmode:
         print("In lexicon")
@@ -121,6 +123,9 @@ def lexiconTag(line):
 
     filename = outputdir + 'relsynlex-' + lng + '.csv'
     relsynlexcsv = open(filename, 'w')
+
+    filename = outputdir + 'nonlexsyn-' + lng + '.csv'
+    nonlexsyncsv = open(filename, 'w')
 
     writeHeaderWord(wordcsv)
     writeHeaderRels(relcsv)
@@ -158,17 +163,15 @@ def synsetRelationsTag(line):
         targetid = line.split('\'')[1]
         reltype = line.split('\'')[3]
 
-        writeLineRels(currentid, targetid, reltype, relcsv)
-
         # Uncomment to generate a clean process without orphan synset
         # It also prints on stdout orphans synsets
-        #if currentid in synsets:
-        #    if targetid in synsets:
-        #        writeLineRels(currentid, targetid, reltype, relcsv)
-        #    else:
-        #        print(targetid)
-        #else:
-        #    print(currentid)
+        if currentid in synsets:
+            if targetid in synsets:
+                writeLineRels(currentid, targetid, reltype, relcsv)
+            else:
+                writeLineSynset(targetid, nonlexsyncsv)
+        else:
+            writeLineSynset(currentid, nonlexsyncsv)
         line = synsetRelation(line)
     return lmffile.readline()
 
