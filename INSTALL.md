@@ -26,12 +26,12 @@ Run
 ---
 
 1. Put your LMF XML files (`*-lmf.xml`) in `omwg/data/`
-2. Execute `run.sh`, this will generate:
+2. `cd omwg` then execute `run.sh`, this will generate:
   * `data/csv-files/word-xxx.csv` (nodes)
   * `data/csv-files/rels-xxx.csv` (edges)
   * `data/csv-files/syn-xxx.csv` (nodes)
   * `data/csv-files/relsynlex-xxx.csv` (edges)
-3. The database will be created in `omw-graph/db/`
+3. The database will be created in `omwg/db/`
 4. Copy/paste the database in `.../neo4j_folder/data/`
 5. Modify neo4j properties to make it use the new db
 6. Start/Restart neo4j
