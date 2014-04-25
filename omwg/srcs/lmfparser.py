@@ -162,11 +162,12 @@ def synsetRelationsTag(line):
         reltype = line.split('\'')[3]
 
         if not currentid in synsets:
-            writeLineSynset(currentid, "Synset,Fake", syncsv)
+            writeLineSynset(currentid, "Synset,NonLexicalized", syncsv)
             synsets[currentid].append(currentid)
-            if not targetid in synsets:
-                writeLineSynset(targetid, "Synset,Fake", syncsv)
-                synsets[targetid].append(targetid)
+        if not targetid in synsets:
+            writeLineSynset(targetid, "Synset,NonLexicalized", syncsv)
+            synsets[targetid].append(targetid)
+
         writeLineRels(currentid, targetid, reltype, relcsv)
 
         line = synsetRelation(line)

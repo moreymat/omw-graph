@@ -14,11 +14,11 @@ def writeHeaderRels(target):
 
 
 def writeHeaderWord(target):
-    target.write("name:string:lexkey\tlemma\tpartofspeech\ttype:label\n")
+    target.write("name:string:lexkey\tlemma\tpartofspeech\tlabels:label\n")
 
 
 def writeHeaderSynset(target):
-    target.write("name:string:synkey\ttype:label\n")
+    target.write("name:string:synkey\tlabels:label\n")
 
 
 def writeHeaderRelSynLex(target):
@@ -26,8 +26,11 @@ def writeHeaderRelSynLex(target):
 
 
 def writeLineRels(syn1, syn2, rel, target):
+
     target.write("{syn1}\t{syn2}\t{rel}\n".format(
-        syn1=syn1, syn2=syn2, rel=rel))
+        syn1=syn1,
+        syn2=syn2,
+        rel=rel))
 
 
 def writeLineWord(lng, version, lex, lemma, pos, target):
