@@ -65,7 +65,7 @@ def senseTag(line):
     synset = line.split('\'')[3]
 
     if not synset in synsets:
-        writeLineSynset(synset, syncsv)
+        writeLineSynset(synset, "Synset", syncsv)
         synsets[synset].append(synset)
     writeLineRelSynLex(currentid, lng, version, synset, relsynlexcsv)
     return lmffile.readline()
@@ -162,10 +162,10 @@ def synsetRelationsTag(line):
         reltype = line.split('\'')[3]
 
         if not currentid in synsets:
-            writeLineSynset(currentid, syncsv)
+            writeLineSynset(currentid, "Synset,Fake", syncsv)
             synsets[currentid].append(currentid)
             if not targetid in synsets:
-                writeLineSynset(targetid, syncsv)
+                writeLineSynset(targetid, "Synset,Fake", syncsv)
                 synsets[targetid].append(targetid)
         writeLineRels(currentid, targetid, reltype, relcsv)
 

@@ -37,8 +37,8 @@ def writeLineWord(lng, version, lex, lemma, pos, target):
         pos=pos))
 
 
-def writeLineSynset(syn, target):
-    target.write("{syn}\tSynset\n".format(syn=syn))
+def writeLineSynset(syn, label, target):
+    target.write("{syn}\t{label}\n".format(syn=syn, label=label))
 
 
 def writeLineRelSynLex(lex, lng, version, syn, target):
