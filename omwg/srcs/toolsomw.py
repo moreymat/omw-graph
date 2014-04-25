@@ -45,6 +45,6 @@ def writeLineSynset(syn, label, target):
 
 
 def writeLineRelSynLex(lex, lng, version, syn, target):
-    target.write("{syn}\t{lex}\tlexical\n".format(
+    target.write("{syn}\t{lex}\thas_sense_in\n".format(
         syn=syn,
         lex=lng + '-' + version + '-' + lex))
