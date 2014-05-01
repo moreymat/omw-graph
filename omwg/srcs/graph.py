@@ -12,10 +12,23 @@ def connectDb():
     db = neo4j.GraphDatabaseService(dburl)
 
 def flateningGraph(nonlex):
+    rels = []
     for n in nonlex:
-        hyporels = n.match_incoming(rel_type='hypo')
+        pwette =  False
+        hyporels = n.match_outgoing(rel_type='hypo')
         for h in hyporels:
-            print(h)
+            pwette = True
+            break
+
+        if not pwette:
+            if n['name'].split('-')[3] == 'n':
+                outrels = list(db.match(start_node=n))
+                increls = list(db.match(end_node=n))
+
+                for o in outrels:
+                    db.delete(o)
+                    print('delelete ' + str(o))
+
 
 def main():
     global db
