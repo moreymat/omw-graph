@@ -13,6 +13,7 @@ def connectDb():
 
 def flateningGraph(nonlex):
     rels = []
+    compteur = 0
     for n in nonlex:
         pwette =  False
         hyporels = n.match_outgoing(rel_type='hypo')
@@ -22,12 +23,21 @@ def flateningGraph(nonlex):
 
         if not pwette:
             if n['name'].split('-')[3] == 'n':
+                compteur = compteur + 1
+                print(str(compteur))
                 outrels = list(db.match(start_node=n))
                 increls = list(db.match(end_node=n))
 
                 for o in outrels:
+                    print('delelete out' + str(o))
                     db.delete(o)
-                    print('delelete ' + str(o))
+
+                for o in increls:
+                    print('delelete inc ' + str(o))
+                    db.delete(o)
+
+                print('delelete ' + str(n))
+                db.delete(n)
 
 
 def main():
